@@ -1,7 +1,3 @@
-export const Setting = {
-  adCount: 5,
-} as const;
-
 export enum AppRoute {
   Favorites = '/favorites',
   Root = '/',
@@ -14,3 +10,14 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export enum CitiesName {
+  AMSTERDAM = 'Amsterdam',
+  COLOGNE = 'Cologne',
+  PARIS = 'Paris',
+  DUSSELDORF = 'Dusseldorf',
+  BRUSSELS = 'Brussels',
+  HAMBURG = 'Hamburg',
+}
+
+export const RATING_STARS_STYLE_KOEF = 20;
