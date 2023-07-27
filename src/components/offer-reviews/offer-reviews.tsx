@@ -1,5 +1,5 @@
-import { Review } from '../types/review';
-import { getRatingStarsStyle } from '../utils';
+import { Review } from '../../types/review';
+import { getRatingStarsStyle } from '../../utils';
 
 type OfferReviewsProps = {
   reviews: Review[];

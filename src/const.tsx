@@ -21,3 +21,7 @@ export enum CitiesName {
 }
 
 export const RATING_STARS_STYLE_KOEF = 20;
+
+export const URL_MARKER_DEFAULT = 'img/pin.svg';
+
+export const URL_MARKER_CURRENT = 'img/pin-active.svg';

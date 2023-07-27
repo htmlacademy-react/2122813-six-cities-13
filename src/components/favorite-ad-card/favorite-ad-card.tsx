@@ -1,5 +1,5 @@
-import { Offer } from '../types/offer';
-import { getRatingStarsStyle } from '../utils';
+import { Offer } from '../../types/offer';
+import { getRatingStarsStyle } from '../../utils';
 
 type FavoriteAdCardProps = {
   offer: Offer;

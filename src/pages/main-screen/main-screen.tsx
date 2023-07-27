@@ -1,12 +1,16 @@
-import AdCardList from '../../ad-card-list/ad-card-list';
+import AdCardList from '../../components/ad-card-list/ad-card-list';
 import Header from '../../components/header/header';
 import { Offer } from '../../types/offer';
+import Map from '../../components/map/map';
+import { useState } from 'react';
 
 type MainScreenProps = {
   offers: Offer[];
 }
 
 export default function MainScreen ({ offers }: MainScreenProps): JSX.Element {
+  const [activeOfferId, setActiveOfferId] = useState(0);
+
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -52,7 +56,7 @@ export default function MainScreen ({ offers }: MainScreenProps): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+              <b className="places__found">{ offers.length } places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by </span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -69,11 +73,11 @@ export default function MainScreen ({ offers }: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <AdCardList offers={offers} />
+                <AdCardList offers={ offers } setActiveOfferId={ setActiveOfferId } />
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <Map offers={ offers } activeOfferId={ activeOfferId }/>
             </div>
           </div>
         </div>
