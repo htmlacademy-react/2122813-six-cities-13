@@ -36,9 +36,9 @@ export default function App({ offers, reviews }: AppScreenProps): JSX.Element {
           path = {AppRoute.Login}
           element = {<LoginScreen />}
         />
-        <Route path = {AppRoute.Offer}>
-          <Route path = ':id' element = {<OfferScreen offers={offers} reviews={reviews} />} />
-        </Route>
+        <Route path={`${AppRoute.Offer}/:id`}
+          element = {<OfferScreen offers={offers} reviews={reviews} />}
+        />
         <Route
           path = '*'
           element = {<NotFoundScreen />}

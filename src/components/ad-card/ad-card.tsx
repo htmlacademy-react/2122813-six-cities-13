@@ -4,7 +4,7 @@ import { getRatingStarsStyle } from '../../utils';
 
 type AdCardProps = {
   offer: Offer;
-  onAdCardMouseOver({ id }:{ id:number }): void;
+  onAdCardMouseOver(id:number): void;
 }
 
 export default function AdCard({offer, onAdCardMouseOver}: AdCardProps): JSX.Element {
@@ -13,12 +13,14 @@ export default function AdCard({offer, onAdCardMouseOver}: AdCardProps): JSX.Ele
   return (
     <article className="cities__card place-card" id = { offer.id.toString() } onMouseOver = { (evt) => {
       const target = evt.currentTarget as HTMLElement;
-      onAdCardMouseOver({ id: +target.id }); //НЕ ЗАБЫТЬ ПОТОМ УБРАТЬ ПЛЮС, ЧТОБЫ НЕ БЫЛО КАК В ПРОШЛЫЙ РАЗ!
+      onAdCardMouseOver(+target.id); //НЕ ЗАБЫТЬ ПОТОМ УБРАТЬ ПЛЮС, ЧТОБЫ НЕ БЫЛО КАК В ПРОШЛЫЙ РАЗ!
     }}
     >
-      <div className="place-card__mark">
-        <span>{ isPremium ? 'Premium' : '' }</span>
-      </div>
+      { isPremium ? (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      ) : null }
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/">
           <img className="place-card__image" src={ previewImage } width={260} height={200} alt="Place image" />
@@ -39,14 +41,14 @@ export default function AdCard({offer, onAdCardMouseOver}: AdCardProps): JSX.Ele
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: getRatingStarsStyle(rating) }} />
+            <span style={{ width: getRatingStarsStyle(Math.round(rating)) }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
           <Link to={ `/offer/${ offer.id }` }> { title }</Link>
         </h2>
-        <p className="place-card__type">{ type }</p>
+        <p className="place-card__type">{ type.slice(0,1).toUpperCase() + type.slice(1) }</p>
       </div>
     </article>
   );

@@ -2,8 +2,8 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
 import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
-import OfferReviewForm from '../../offer-review-form/offer-review-form';
-import OfferReviews from '../../offer-reviews/offer-reviews';
+import OfferReviewForm from '../../components/offer-review-form/offer-review-form';
+import OfferReviews from '../../components/offer-reviews/offer-reviews';
 import { getRatingStarsStyle } from '../../utils';
 
 type OfferScreenProps = {
@@ -34,14 +34,16 @@ export default function OfferScreen({offers, reviews}: OfferScreenProps): JSX.El
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className="offer__mark">
-                <span>{ isPremium ? 'Premium' : '' }</span>
-              </div>
+              { isPremium ? (
+                <div className="offer__mark">
+                  <span>Premium</span>
+                </div>
+              ) : null }
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
                   { title }
                 </h1>
-                <button className= { `offer__bookmark-button button ${isFavorite ? 'offer__bookmark-button--active' : '' }`} type="button">
+                <button className= { `offer__bookmark-button button ${ isFavorite ? 'offer__bookmark-button--active' : '' }`} type="button">
                   <svg className="offer__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
@@ -50,13 +52,13 @@ export default function OfferScreen({offers, reviews}: OfferScreenProps): JSX.El
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: getRatingStarsStyle(rating) }} />
+                  <span style={{ width: getRatingStarsStyle(Math.round(rating)) }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{ rating }</span>
               </div>
               <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">{ type }</li>
+                <li className="offer__feature offer__feature--entire">{ type.slice(0,1).toUpperCase() + type.slice(1) }</li>
                 <li className="offer__feature offer__feature--bedrooms">
                   { ` ${ bedrooms } Bedrooms` }
                 </li>
@@ -83,7 +85,7 @@ export default function OfferScreen({offers, reviews}: OfferScreenProps): JSX.El
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div className= { `offer__avatar-wrapper ${host.isPro ? 'offer__avatar-wrapper--pro' : ''} user__avatar-wrapper` }>
                     <img
                       className="offer__avatar user__avatar"
                       src={ host.avatarUrl }

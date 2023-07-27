@@ -1,6 +1,6 @@
-import { Offer } from '../types/offer';
+import { Offer } from '../../types/offer';
 import FavoriteAdCard from '../favorite-ad-card/favorite-ad-card';
-import { CitiesName } from '../const';
+import { CitiesName } from '../../const';
 
 type FavoriteAdCardListProps = {
   offers: Offer[];

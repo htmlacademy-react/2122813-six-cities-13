@@ -1,6 +1,6 @@
 import Header from '../../components/header/header';
 import { Offer } from '../../types/offer';
-import FavoriteAdCardList from '../../favorite-ad-card-list/favorite-ad-card-list';
+import FavoriteAdCardList from '../../components/favorite-ad-card-list/favorite-ad-card-list';
 
 type FavoritesScreenProps = {
   offers: Offer[];
