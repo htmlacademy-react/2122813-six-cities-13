@@ -3,13 +3,14 @@ import AdCard from '../ad-card/ad-card';
 
 type AdCardListProps = {
   offers: Offer[];
+  isMainScreen: boolean;
   setActiveOfferId(id:number): void;
 }
 
-export default function AdCardList({ offers, setActiveOfferId }: AdCardListProps): JSX.Element {
+export default function AdCardList({ offers, setActiveOfferId, isMainScreen }: AdCardListProps): JSX.Element {
   return (
     <>
-      { offers.map((offer) => <AdCard onAdCardMouseOver={ setActiveOfferId } key={ +offer.id } offer={ offer } />)}
+      { offers.map((offer) => <AdCard isMainScreen={isMainScreen} onAdCardMouseOver={ setActiveOfferId } key={ +offer.id } offer={ offer } />)}
     </>
   );
 }
