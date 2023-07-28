@@ -73,11 +73,11 @@ export default function MainScreen ({ offers }: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <AdCardList offers={ offers } setActiveOfferId={ setActiveOfferId } />
+                <AdCardList isMainScreen offers={ offers } setActiveOfferId={ setActiveOfferId } />
               </div>
             </section>
             <div className="cities__right-section">
-              <Map offers={ offers } activeOfferId={ activeOfferId }/>
+              <Map isMainScreen offers={ offers } activeOfferId={ activeOfferId }/>
             </div>
           </div>
         </div>

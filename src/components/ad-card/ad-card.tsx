@@ -1,27 +1,32 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { getRatingStarsStyle } from '../../utils';
+import { AdClasses } from '../../const';
 
 type AdCardProps = {
   offer: Offer;
   onAdCardMouseOver(id:number): void;
+  isMainScreen: boolean;
 }
 
-export default function AdCard({offer, onAdCardMouseOver}: AdCardProps): JSX.Element {
+export default function AdCard({ offer, onAdCardMouseOver, isMainScreen }: AdCardProps): JSX.Element {
   const { isFavorite, isPremium, previewImage, price, title, type, rating } = offer;
 
   return (
-    <article className="cities__card place-card" id = { offer.id.toString() } onMouseOver = { (evt) => {
-      const target = evt.currentTarget as HTMLElement;
-      onAdCardMouseOver(+target.id); //НЕ ЗАБЫТЬ ПОТОМ УБРАТЬ ПЛЮС, ЧТОБЫ НЕ БЫЛО КАК В ПРОШЛЫЙ РАЗ!
-    }}
+    <article
+      className={ isMainScreen ? AdClasses.ArticleMainAdClass : AdClasses.ArticlePropertyAdClass }
+      id = { offer.id.toString() }
+      onMouseOver = { (evt) => {
+        const target = evt.currentTarget as HTMLElement;
+        onAdCardMouseOver(+target.id); //НЕ ЗАБЫТЬ ПОТОМ УБРАТЬ ПЛЮС, ЧТОБЫ НЕ БЫЛО КАК В ПРОШЛЫЙ РАЗ!
+      } }
     >
       { isPremium ? (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       ) : null }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={ isMainScreen ? AdClasses.ImageWrapperMainAdClass : AdClasses.ImageWrapperPropertyAdClass }>
         <a href="/">
           <img className="place-card__image" src={ previewImage } width={260} height={200} alt="Place image" />
         </a>
@@ -41,7 +46,7 @@ export default function AdCard({offer, onAdCardMouseOver}: AdCardProps): JSX.Ele
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: getRatingStarsStyle(Math.round(rating)) }} />
+            <span style={ { width: getRatingStarsStyle(Math.round(rating)) } } />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
