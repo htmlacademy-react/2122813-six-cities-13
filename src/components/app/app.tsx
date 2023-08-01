@@ -6,15 +6,16 @@ import LoginScreen from '../../pages/login-screen/login-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRout from '../private-route/private-route';
-import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
+import { useAppSelector } from '../../hooks';
 
 type AppScreenProps = {
-  offers: Offer[];
   reviews: Review[];
 }
 
-export default function App({ offers, reviews }: AppScreenProps): JSX.Element {
+export default function App({ reviews }: AppScreenProps): JSX.Element {
+  const offers = useAppSelector((state) => state.offers);
+
   return (
     <BrowserRouter>
       <Routes>
