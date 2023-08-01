@@ -4,7 +4,7 @@ import AdCard from '../ad-card/ad-card';
 type AdCardListProps = {
   offers: Offer[];
   isMainScreen: boolean;
-  setActiveOfferId(id:number): void;
+  setActiveOfferId?: (id:number) => void;
 }
 
 export default function AdCardList({ offers, setActiveOfferId, isMainScreen }: AdCardListProps): JSX.Element {
