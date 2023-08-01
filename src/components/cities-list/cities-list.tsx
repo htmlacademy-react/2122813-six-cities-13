@@ -1,24 +1,26 @@
-import { CitiesName } from '../../const';
+import { CitiesName, SortingTypes } from '../../const';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { filterOffers, pickCity } from '../../store/action';
 
 type CitiesListProps = {
+  setSortingType(value: string): void;
   currentCity: string | null;
 }
 
-export default function CitiesList({ currentCity }: CitiesListProps): JSX.Element {
+export default function CitiesList({ setSortingType, currentCity }: CitiesListProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
     <ul className="locations__list tabs__list" onClick={(evt) => {
       const target = evt.target as HTMLElement;
 
-      if (target.tagName !== 'SPAN') {
+      if (target.tagName !== 'A' && target.tagName !== 'SPAN') {
         return;
       }
-      dispatch(pickCity(target.textContent));
+      dispatch(pickCity(target.firstChild?.textContent ? target.firstChild.textContent : null));
       dispatch(filterOffers());
+      setSortingType(SortingTypes.Popular);
     }}
     >
       <li className="locations__item">
