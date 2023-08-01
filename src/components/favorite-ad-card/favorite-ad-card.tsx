@@ -10,9 +10,11 @@ export default function FavoriteAdCard({ offer }: FavoriteAdCardProps): JSX.Elem
 
   return (
     <article className="favorites__card place-card">
-      <div className="place-card__mark">
-        <span>{ isPremium ? 'Premium' : '' }</span>
-      </div>
+      { isPremium ? (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      ) : null }
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href="/">
           <img className="place-card__image" src={ previewImage } width="150" height="110" alt="Place"/>
@@ -40,7 +42,7 @@ export default function FavoriteAdCard({ offer }: FavoriteAdCardProps): JSX.Elem
         <h2 className="place-card__name">
           <a href="/">{ title }</a>
         </h2>
-        <p className="place-card__type">{ type }</p>
+        <p className="place-card__type">{ type.slice(0,1).toUpperCase() + type.slice(1) }</p>
       </div>
     </article>
   );

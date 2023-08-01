@@ -37,3 +37,8 @@ export enum MapClasses {
   SectionMainMapClass = 'cities__map map',
   SectionPropertyMapClass = 'offer__map map',
 }
+
+export enum Actions {
+  PICK_CITY = 'PICK_CITY',
+  FILTER_OFFERS ='FILTER_OFFERS',
+}
