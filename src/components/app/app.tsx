@@ -1,14 +1,22 @@
-import { AppRoute, AuthorizationStatus } from '../../const';
-import { Route, BrowserRouter, Routes } from 'react-router-dom';
+import { AppRoute, SPINNER_COLOR } from '../../const';
+import { Route, Routes } from 'react-router-dom';
 import MainScreen from '../../pages/main-screen/main-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import { LoadingScreen } from '../../pages/loading-screen/loading-screen';
 import PrivateRout from '../private-route/private-route';
 import { Review } from '../../types/review';
 import { useAppSelector } from '../../hooks';
+import ClipLoader from 'react-spinners/ClipLoader';
+import { CSSProperties } from 'react';
+import { HistoryRouter } from '../hustory-route/history-route';
+import { browserHistory } from '../../browser-history';
+
+const override: CSSProperties = {
+  display: 'block',
+  margin: 'auto',
+};
 
 type AppScreenProps = {
   reviews: Review[];
@@ -20,12 +28,18 @@ export default function App({ reviews }: AppScreenProps): JSX.Element {
 
   if (isOffersDataLoading) {
     return (
-      <LoadingScreen />
+      <ClipLoader
+        color={ SPINNER_COLOR }
+        loading={ isOffersDataLoading }
+        cssOverride={ override }
+        size={150}
+        aria-label="Loading Spinner"
+      />
     );
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={ browserHistory }>
       <Routes>
         <Route
           path = {AppRoute.Root}
@@ -34,9 +48,7 @@ export default function App({ reviews }: AppScreenProps): JSX.Element {
         <Route
           path = {AppRoute.Favorites}
           element = {
-            <PrivateRout
-              authorizationStatus = {AuthorizationStatus.Auth}
-            >
+            <PrivateRout>
               <FavoritesScreen offers={offers} />
             </PrivateRout>
           }
@@ -53,6 +65,6 @@ export default function App({ reviews }: AppScreenProps): JSX.Element {
           element = {<NotFoundScreen />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }

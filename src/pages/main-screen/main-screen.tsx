@@ -14,7 +14,7 @@ type MainScreenProps = {
 }
 
 export default function MainScreen ({ offers }: MainScreenProps): JSX.Element {
-  const [activeOfferId, setActiveOfferId] = useState(0);
+  const [activeOfferId, setActiveOfferId] = useState<number | null>(null);
   const currentCity = useAppSelector((state) => state.cityName);
   const [sortingType, setSortingType] = useState<string | null>(SortingTypes.Popular);
   const sortedOffers = useSort(offers, sortingType);
