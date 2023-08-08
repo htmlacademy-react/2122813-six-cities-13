@@ -1,4 +1,4 @@
-import Header from '../../components/header/header';
+import HeaderForLoginScreen from '../../components/header/header-for-login-screen';
 import { useRef, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
@@ -29,7 +29,7 @@ export default function LoginScreen(): JSX.Element {
 
   return (
     <div className="page page--gray page--login">
-      <Header />
+      <HeaderForLoginScreen />
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">

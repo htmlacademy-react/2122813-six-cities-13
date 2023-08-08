@@ -3,6 +3,7 @@ export enum AppRoute {
   Root = '/',
   Login = '/login',
   Offer = '/offer',
+  Load = '/load'
 }
 
 export enum AuthorizationStatus {
@@ -47,6 +48,11 @@ export enum Actions {
   SET_USER_EMAIL = 'SET_USER_EMAIL',
   SET_ERROR = 'SET_ERROR',
   REDIRECT_ROUTE = 'REDIRECT_ROUTE',
+  LOAD_OFFER_INFO = 'LOAD_OFFER_INFO',
+  LOAD_NEARBY_OFFERS = 'LOAD_NEARBY_OFFERS',
+  LOAD_OFFER_COMMENTS = 'LOAD_OFFER_COMMENTS',
+  SET_CURRENT_OFFER_DATA_LOADING = 'SET_CURRENT_OFFER_DATA_LOADING',
+  SET_COMMENT_DATA_SENDING = 'SET_COMMENT_DATA_SENDING',
 }
 
 export enum SortingTypes {
@@ -57,9 +63,11 @@ export enum SortingTypes {
 }
 
 export enum APIRoute {
-  Offers = '/offers',
+  Offers = '/offers/',
   Login = '/login',
   Logout = '/logout',
+  Comment = '/comments/',
+  NearbyOffers = '/nearby'
 }
 
 export const TIMEOUT_SHOW_ERROR = 2000;
