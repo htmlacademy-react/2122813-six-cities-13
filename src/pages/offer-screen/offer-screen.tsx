@@ -1,7 +1,4 @@
-import { useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
-import { Offer } from '../../types/offer';
-import { Review } from '../../types/review';
 import OfferReviewForm from '../../components/offer-review-form/offer-review-form';
 import OfferReviews from '../../components/offer-reviews/offer-reviews';
 import { getRatingStarsStyle } from '../../utils';
@@ -9,17 +6,14 @@ import AdCardList from '../../components/ad-card-list/ad-card-list';
 import Map from '../../components/map/map';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { useAppSelector } from '../../hooks';
+import { getCurrentOfferDataLoadingStatus, getNearbyOffers, getOfferInfo } from '../../store/current-offer-data/selectors';
+import { getAuthorizationStatus } from '../../store/authorization-user-process/selectors';
 
-type OfferScreenProps = {
-  offer: Offer | null;
-  reviews: Review[];
-  nearbyOffers: Offer[];
-}
-
-export default function OfferScreen({ offer, reviews, nearbyOffers }: OfferScreenProps): JSX.Element {
-  const {id} = useParams();
-  const isCurrenOfferDataLoading = useAppSelector((state) => state.isCurrentOfferDataLoading);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+export default function OfferScreen(): JSX.Element {
+  const isCurrenOfferDataLoading = useAppSelector(getCurrentOfferDataLoadingStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const offer = useAppSelector(getOfferInfo);
+  const nearbyOffers = useAppSelector(getNearbyOffers);
 
   if (offer && !isCurrenOfferDataLoading) {
     const {isFavorite, isPremium, description, goods, host, images, rating, maxAdults, price, title, type, bedrooms} = offer;
@@ -116,7 +110,7 @@ export default function OfferScreen({ offer, reviews, nearbyOffers }: OfferScree
                   </div>
                 </div>
                 <section className="offer__reviews reviews">
-                  <OfferReviews reviews={ reviews } />
+                  <OfferReviews />
                   {
                     authorizationStatus === 'AUTH' &&
                     <OfferReviewForm id={ offer.id.toString() }/>
@@ -124,7 +118,7 @@ export default function OfferScreen({ offer, reviews, nearbyOffers }: OfferScree
                 </section>
               </div>
             </div>
-            <Map isMainScreen={ false } offers={ [...nearbyOffers, offer] } activeOfferId={ Number(id) } />
+            <Map isMainScreen={ false } offers={ [...nearbyOffers, offer] } />
           </section>
           <div className="container">
             <section className="near-places places">

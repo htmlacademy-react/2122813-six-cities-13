@@ -4,13 +4,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { Link } from 'react-router-dom';
+import { getCityName } from '../../store/offers-data/selectors';
 
 export default function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
-  const currentCity = useAppSelector((state) => state.cityName);
+  const currentCity = useAppSelector(getCityName);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));

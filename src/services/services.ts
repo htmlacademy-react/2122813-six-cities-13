@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { processErrorHandle } from './process-erroe-handle';
 import { getToken } from './token';
+import { toast } from 'react-toastify';
 
 const BACKEND_URL = 'https://13.design.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
@@ -24,9 +24,9 @@ export const createAPI = (): AxiosInstance => {
 
   api.interceptors.response.use(
     (response) => response,
-    (error: AxiosError<{error: string}>) => {
-      if (error.response) {
-        processErrorHandle(error.response.data.error);
+    (error: AxiosError<{ error: string }>) => {
+      if (error.response && error.response.status !== 401) {
+        toast.warn(error.response.data.error);
       }
 
       throw error;

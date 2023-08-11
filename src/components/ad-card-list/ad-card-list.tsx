@@ -2,16 +2,15 @@ import { Offer } from '../../types/offer';
 import AdCard from '../ad-card/ad-card';
 
 type AdCardListProps = {
-  offers: Offer[];
   isMainScreen: boolean;
-  setActiveOfferId?: (id:number) => void;
+  offers: Offer[];
 }
 
-export default function AdCardList({ offers, setActiveOfferId, isMainScreen }: AdCardListProps): JSX.Element {
+export default function AdCardList({isMainScreen, offers}: AdCardListProps): JSX.Element {
+
   return (
     <>
-      { offers.map((offer) => <AdCard isMainScreen={isMainScreen} onAdCardMouseOver={ setActiveOfferId } key={ +offer.id } offer={ offer } />)}
+      { offers.map((offer) => <AdCard isMainScreen={isMainScreen} key={offer.id} offer={offer}/>) };
     </>
   );
 }
-// ПОМНИТЬ ПРО ПЛЮС!

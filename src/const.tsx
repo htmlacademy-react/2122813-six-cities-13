@@ -53,6 +53,8 @@ export enum Actions {
   LOAD_OFFER_COMMENTS = 'LOAD_OFFER_COMMENTS',
   SET_CURRENT_OFFER_DATA_LOADING = 'SET_CURRENT_OFFER_DATA_LOADING',
   SET_COMMENT_DATA_SENDING = 'SET_COMMENT_DATA_SENDING',
+  SET_SORT_TYPE = 'SET_SORT_TYPE',
+  SET_CURRENT_OFFER_ID = 'SET_CURRENT_OFFER_ID',
 }
 
 export enum SortingTypes {
@@ -70,6 +72,12 @@ export enum APIRoute {
   NearbyOffers = '/nearby'
 }
 
-export const TIMEOUT_SHOW_ERROR = 2000;
+export enum SlicesName {
+  Page = 'PAGE',
+  User = 'USER',
+  OffersData = 'OFFERS_DATA',
+  CurrentOfferData = 'CURRENT_OFFER_DATA',
+  UserReview = 'USER_REVIEW',
+}
 
 export const SPINNER_COLOR = '#7777FF';
