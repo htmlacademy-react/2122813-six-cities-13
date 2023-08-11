@@ -1,12 +1,11 @@
-import { Offer } from '../../types/offer';
 import FavoriteAdCard from '../favorite-ad-card/favorite-ad-card';
 import { CitiesName } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getFilteredOffers } from '../../store/offers-data/selectors';
 
-type FavoriteAdCardListProps = {
-  offers: Offer[];
-}
+export default function FavoriteAdCardList(): JSX.Element {
+  const offers = useAppSelector(getFilteredOffers);
 
-export default function FavoriteAdCardList({ offers }: FavoriteAdCardListProps): JSX.Element {
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
@@ -17,7 +16,7 @@ export default function FavoriteAdCardList({ offers }: FavoriteAdCardListProps):
         </div>
       </div>
       <div className="favorites__places">
-        {offers.filter((offer) => offer.city.name === CitiesName.AMSTERDAM).map((offer) => <FavoriteAdCard key={ offer.id } offer={ offer }/>)}
+        { offers.filter((offer) => offer.city.name === CitiesName.AMSTERDAM).map((offer) => <FavoriteAdCard key={ offer.id } offer={ offer }/>) }
       </div>
     </li>
   );

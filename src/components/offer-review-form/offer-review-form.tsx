@@ -1,6 +1,7 @@
 import { useState, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sendOfferCommentAction } from '../../store/api-actions';
+import { getCommentDataSendingStatus } from '../../store/user-review/selectors';
 
 const MIN_COMMENT_CHARACTERS = 50;
 const MAX_COMMENT_CHARACTERS = 300;
@@ -11,7 +12,7 @@ export default function OfferReviewForm({ id }: { id: string }): JSX.Element {
     review: '',
   });
 
-  const isCommentDataSending = useAppSelector((state) => state.currentOffer.isCommentDataSending);
+  const isCommentDataSending = useAppSelector(getCommentDataSendingStatus);
   const isSubmitDisabled = (formData.review.length < MIN_COMMENT_CHARACTERS) || formData.review.length > MAX_COMMENT_CHARACTERS || (formData.rating === null) || isCommentDataSending;
   const dispatch = useAppDispatch();
 

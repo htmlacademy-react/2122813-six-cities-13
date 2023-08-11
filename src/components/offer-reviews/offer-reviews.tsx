@@ -1,11 +1,10 @@
-import { Review } from '../../types/review';
 import { getRatingStarsStyle } from '../../utils';
+import { useAppSelector } from '../../hooks';
+import { getComments } from '../../store/current-offer-data/selectors';
 
-type OfferReviewsProps = {
-  reviews: Review[];
-}
+export default function OfferReviews(): JSX.Element {
+  const reviews = useAppSelector(getComments);
 
-export default function OfferReviews({ reviews }: OfferReviewsProps): JSX.Element {
   return (
     <>
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{ reviews.length }</span></h2>
