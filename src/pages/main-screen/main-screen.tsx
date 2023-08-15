@@ -4,6 +4,7 @@ import CitiesList from '../../components/cities-list/cities-list';
 import { useAppSelector } from '../../hooks';
 import OffersBoard from '../../components/offers-board/offers-board';
 import { getFilteredOffers } from '../../store/offers-data/selectors';
+import { MainEmpty } from '../../components/main-empty/main-empty';
 
 export default function MainScreen (): JSX.Element {
   const offers = useAppSelector(getFilteredOffers);
@@ -19,12 +20,13 @@ export default function MainScreen (): JSX.Element {
           </section>
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <OffersBoard offers={ offers } />
-            <div className="cities__right-section">
-              <Map isMainScreen offers={ offers } />
-            </div>
-          </div>
+          { !offers.length ? <MainEmpty /> :
+            <div className="cities__places-container container">
+              <OffersBoard offers={offers} />
+              <div className="cities__right-section">
+                <Map isMainScreen offers={offers} />
+              </div>
+            </div> }
         </div>
       </main>
     </div>

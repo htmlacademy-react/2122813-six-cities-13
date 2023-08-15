@@ -26,14 +26,13 @@ type MapProps = {
 
 
 export default function Map(props: MapProps): JSX.Element {
-  const { offers, isMainScreen } = props;
-
+  const {isMainScreen, offers} = props;
   const activeOfferId = useAppSelector(getCurrentOfferId);
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0]);
 
   useEffect(() => {
-    if (map) {
+    if (map && isMainScreen) {
       map.eachLayer((layer) => {
         if (layer.options.pane === 'markerPane') {
           map.removeLayer(layer);
@@ -47,33 +46,59 @@ export default function Map(props: MapProps): JSX.Element {
         });
 
         marker.setIcon(
-          activeOfferId !== undefined && +offer.id === activeOfferId //ПОМНИ ПРО ПЛЮС
+          activeOfferId !== undefined && offer.id === activeOfferId ||
+          (!isMainScreen && offer.id === activeOfferId)
             ? currentCustomIcon
             : defaultCustomIcon
         )
           .addTo(map);
       });
     }
-  }, [map, offers, activeOfferId]);
+  }, [map, offers, activeOfferId, isMainScreen]);
+
+  useEffect(() => {
+    if (map && !isMainScreen) {
+      map.eachLayer((layer) => {
+        if (layer.options.pane === 'markerPane') {
+          map.removeLayer(layer);
+        }
+      });
+      offers.forEach((offer: Offer) => {
+        const marker = new Marker({
+          lat: offer.location.latitude,
+          lng: offer.location.longitude,
+        });
+        marker.setIcon(
+          activeOfferId !== undefined && offer.id === activeOfferId ||
+          (!isMainScreen && offer.id === activeOfferId)
+            ? currentCustomIcon
+            : defaultCustomIcon
+        )
+          .addTo(map);
+      });
+    }
+
+  }, [map, offers, isMainScreen]);
+
 
   useEffect(() => {
     if (map) {
       map.flyTo([offers[0].city.location.latitude, offers[0].city.location.longitude], offers[0].city.location.zoom);
     }
   }, [map, offers]);
-
   return (
     <section
-      className={ isMainScreen ? MapClasses.SectionMainMapClass : MapClasses.SectionPropertyMapClass }
-      ref={ mapRef }
-      style={{
+      className={isMainScreen ? MapClasses.SectionMainMapClass : MapClasses.SectionPropertyMapClass}
+      ref={mapRef}
+      style={ {
         height: '100%',
         minHeight: '500px',
         width: '100%',
         maxWidth: '1144px',
         margin: '0 auto',
-      }}
+      } }
     >
+
     </section>
   );
 }

@@ -65,17 +65,20 @@ export enum SortingTypes {
 }
 
 export enum APIRoute {
+  JustSlash = '/',
   Offers = '/offers/',
   Login = '/login',
   Logout = '/logout',
   Comment = '/comments/',
-  NearbyOffers = '/nearby'
+  NearbyOffers = '/nearby',
+  FavoriteOffers = '/favorite/',
 }
 
 export enum SlicesName {
   Page = 'PAGE',
   User = 'USER',
   OffersData = 'OFFERS_DATA',
+  FavoriteOffersData = 'FAVORITE_OFFERS_DATA',
   CurrentOfferData = 'CURRENT_OFFER_DATA',
   UserReview = 'USER_REVIEW',
 }
