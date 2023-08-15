@@ -8,7 +8,6 @@ export type AppDispatch = typeof store.dispatch;
 
 export type AuthorizationUserProcess = {
   authorizationStatus: string;
-  userEmail: string;
 }
 
 export type OffersData = {
@@ -19,7 +18,7 @@ export type OffersData = {
 }
 
 export type PageEvents = {
-   currentOfferId: number | null;
+   currentOfferId: string | null;
    sortType: string;
 }
 
@@ -32,4 +31,9 @@ export type CurrentOfferData = {
 
 export type UserReview = {
    isCommentDataSending: boolean;
+}
+
+export type FavoriteOffersData = {
+  isFavoriteOffersDataLoading: boolean;
+  favoriteOffers: Offer[];
 }

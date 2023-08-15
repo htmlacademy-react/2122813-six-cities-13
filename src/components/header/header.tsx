@@ -2,13 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logoutAction } from '../../store/api-actions';
-import { getUserEmail, getAuthorizationStatus } from '../../store/authorization-user-process/selectors';
+import { logoutAction, fetchFavoriteOffersAction } from '../../store/api-actions';
+import { getAuthorizationStatus } from '../../store/authorization-user-process/selectors';
+import { getFavoriteOffers } from '../../store/favorites-offers-data/selectors';
+import { getUserEmail } from '../../services/user-email';
 
 function Header(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
-  const userEmail = useAppSelector(getUserEmail);
+  const userEmail = getUserEmail();
+  const favoriteOffers = useAppSelector(getFavoriteOffers);
 
   return (
     <header className="header">
@@ -24,11 +27,14 @@ function Header(): JSX.Element {
               authorizationStatus === AuthorizationStatus.Auth &&
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="/favorites">
+                  <Link className="header__nav-link header__nav-link--profile" onClick={ () => {
+                    dispatch(fetchFavoriteOffersAction());
+                  } } to="/favorites"
+                  >
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">{userEmail}</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__user-name user__name">{ userEmail }</span>
+                    <span className="header__favorite-count">{ favoriteOffers.length }</span>
                   </Link>
                 </li>
                 <li className="header__nav-item" onClick={() => {

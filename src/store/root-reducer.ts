@@ -5,6 +5,7 @@ import { currentOfferData } from './current-offer-data/current-offer-data';
 import { userReview } from './user-review/user-review';
 import { offersData } from './offers-data/offers-data';
 import { pageEvents } from './page-events/page-events';
+import { favoriteOffersData } from './favorites-offers-data/favorites-offers-data';
 
 export const rootReducer = combineReducers({
   [SlicesName.User]: authorizationUserProcess.reducer,
@@ -12,4 +13,5 @@ export const rootReducer = combineReducers({
   [SlicesName.OffersData]: offersData.reducer,
   [SlicesName.CurrentOfferData]: currentOfferData.reducer,
   [SlicesName.UserReview]: userReview.reducer,
+  [SlicesName.FavoriteOffersData]: favoriteOffersData.reducer,
 });

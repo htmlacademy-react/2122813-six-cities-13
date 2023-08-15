@@ -6,11 +6,11 @@ type AdCardListProps = {
   offers: Offer[];
 }
 
-export default function AdCardList({isMainScreen, offers}: AdCardListProps): JSX.Element {
+export default function AdCardList({ isMainScreen, offers }: AdCardListProps): JSX.Element {
 
   return (
     <>
-      { offers.map((offer) => <AdCard isMainScreen={isMainScreen} key={offer.id} offer={offer}/>) };
+      { offers.map((offer) => <AdCard isMainScreen={ isMainScreen } key={ offer.id } offer={ offer }/>) };
     </>
   );
 }

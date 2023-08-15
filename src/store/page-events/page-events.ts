@@ -14,10 +14,10 @@ export const pageEvents = createSlice({
     setSortType: (state, action: PayloadAction<string>) => {
       state.sortType = action.payload;
     },
-    setCurrentOfferId: (state, action: PayloadAction<number | null>) => {
+    setCurrentOfferId: (state, action: PayloadAction<string | null>) => {
       state.currentOfferId = action.payload;
     },
   },
 });
 
-export const {setCurrentOfferId, setSortType} = pageEvents.actions;
+export const { setCurrentOfferId, setSortType } = pageEvents.actions;

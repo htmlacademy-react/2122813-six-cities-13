@@ -5,18 +5,34 @@ import { getRatingStarsStyle } from '../../utils';
 import AdCardList from '../../components/ad-card-list/ad-card-list';
 import Map from '../../components/map/map';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import { useAppSelector } from '../../hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getCurrentOfferDataLoadingStatus, getNearbyOffers, getOfferInfo } from '../../store/current-offer-data/selectors';
 import { getAuthorizationStatus } from '../../store/authorization-user-process/selectors';
+import { browserHistory } from '../../browser-history';
+import { AppRoute } from '../../const';
+import { setOfferFavoriteStatusAction } from '../../store/api-actions';
+import { useState } from 'react';
 
 export default function OfferScreen(): JSX.Element {
   const isCurrenOfferDataLoading = useAppSelector(getCurrentOfferDataLoadingStatus);
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const offer = useAppSelector(getOfferInfo);
   const nearbyOffers = useAppSelector(getNearbyOffers);
+  const dispatch = useAppDispatch();
+  const [isFavoriteOffer, setFavoriteOffer] = useState<boolean | null>(offer?.isFavorite ? offer.isFavorite : null);
 
   if (offer && !isCurrenOfferDataLoading) {
-    const {isFavorite, isPremium, description, goods, host, images, rating, maxAdults, price, title, type, bedrooms} = offer;
+    const { isPremium, description, goods, host, images, rating, maxAdults, price, title, type, bedrooms, id } = offer;
+    const favoriteStatus = `${+!isFavoriteOffer}`;
+    const handleFavoriteButtonClick = () => {
+      if(authorizationStatus !== 'AUTH') {
+        browserHistory.push(AppRoute.Login);
+
+        return;
+      }
+      setFavoriteOffer((prevState) => !prevState);
+      dispatch(setOfferFavoriteStatusAction({ id, favoriteStatus }));
+    };
 
     return (
       <div className="page">
@@ -45,7 +61,7 @@ export default function OfferScreen(): JSX.Element {
                   <h1 className="offer__name">
                     { title }
                   </h1>
-                  <button className= { `offer__bookmark-button button ${ isFavorite ? 'offer__bookmark-button--active' : '' }`} type="button">
+                  <button className= { `offer__bookmark-button button ${ isFavoriteOffer ? 'offer__bookmark-button--active' : '' }`} onClick={ handleFavoriteButtonClick } type="button">
                     <svg className="offer__bookmark-icon" width={31} height={33}>
                       <use xlinkHref="#icon-bookmark" />
                     </svg>
@@ -62,7 +78,7 @@ export default function OfferScreen(): JSX.Element {
                 <ul className="offer__features">
                   <li className="offer__feature offer__feature--entire">{ type.slice(0,1).toUpperCase() + type.slice(1) }</li>
                   <li className="offer__feature offer__feature--bedrooms">
-                    { ` ${ bedrooms } Bedrooms` }
+                    { `${bedrooms} Bedroom${ bedrooms === 1 ? '' : 's' }` }
                   </li>
                   <li className="offer__feature offer__feature--adults">
                     { `Max ${ maxAdults } adults` }
@@ -118,7 +134,7 @@ export default function OfferScreen(): JSX.Element {
                 </section>
               </div>
             </div>
-            <Map isMainScreen={ false } offers={ [...nearbyOffers, offer] } />
+            <Map isMainScreen={ false } offers={ [...nearbyOffers.slice(0, 3), offer] } />
           </section>
           <div className="container">
             <section className="near-places places">
@@ -126,7 +142,7 @@ export default function OfferScreen(): JSX.Element {
                 Other places in the neighbourhood
               </h2>
               <div className="near-places__list places__list">
-                <AdCardList isMainScreen={ false } offers={ nearbyOffers } />
+                <AdCardList isMainScreen={ false } offers={ nearbyOffers.slice(0, 3) } />
               </div>
             </section>
           </div>

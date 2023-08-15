@@ -18,13 +18,13 @@ export const currentOfferData = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchOfferInfoAction.pending, (state, action) => {
+      .addCase(fetchOfferInfoAction.pending, (state) => {
         state.isCurrentOfferDataLoading = true;
       })
       .addCase(fetchOfferInfoAction.fulfilled, (
         state,
-        action: PayloadAction<{offerData: Offer; nearbyOffersData: Offer[]; commentsData: Review[]}>) => {
-        const {offerData, nearbyOffersData, commentsData} = action.payload;
+        action: PayloadAction<{ offerData: Offer; nearbyOffersData: Offer[]; commentsData: Review[] }>) => {
+        const { offerData, nearbyOffersData, commentsData } = action.payload;
         state.offerInfo = offerData;
         state.comments = commentsData;
         state.nearbyOffers = nearbyOffersData;
