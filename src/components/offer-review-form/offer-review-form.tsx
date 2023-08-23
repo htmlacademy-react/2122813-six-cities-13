@@ -36,7 +36,7 @@ export default function OfferReviewForm({ id }: { id: string }): JSX.Element {
 
     dispatch(sendOfferCommentAction({id, resetFormData, commentData:{
       comment: formData.review,
-      rating: formData.rating,
+      rating: Number(formData.rating),
     }}));
   };
 

@@ -1,11 +1,13 @@
-import { getRatingStarsStyle, humanizeReleaseDate } from '../../utils';
+import { getRatingStarsStyle, humanizeReleaseDate } from '../../utils/utils';
 import { useAppSelector } from '../../hooks';
 import { getComments } from '../../store/current-offer-data/selectors';
 
 export default function OfferReviews(): JSX.Element {
   const reviews = useAppSelector(getComments);
 
-  const sortedReviews = reviews.slice(0, 10).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const sortedReviews = reviews
+    .slice(-10)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
     <>

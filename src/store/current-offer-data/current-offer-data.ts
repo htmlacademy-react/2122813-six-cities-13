@@ -6,7 +6,7 @@ import { Offer } from '../../types/offer';
 import { Review } from '../../types/review';
 
 const initialState: CurrentOfferData = {
-  isCurrentOfferDataLoading: false,
+  isCurrentOfferDataLoading: true,
   offerInfo: null,
   comments: [],
   nearbyOffers:[],
@@ -34,7 +34,7 @@ export const currentOfferData = createSlice({
         state.isCurrentOfferDataLoading = false;
       })
       .addCase(sendOfferCommentAction.fulfilled, (state, action) => {
-        state.comments = action.payload;
+        state.comments.push(action.payload);
       });
   }
 });

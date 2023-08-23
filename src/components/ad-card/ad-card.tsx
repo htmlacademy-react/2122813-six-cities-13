@@ -1,8 +1,8 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
-import { getRatingStarsStyle } from '../../utils';
+import { getRatingStarsStyle } from '../../utils/utils';
 import { AdClasses, AppRoute } from '../../const';
-import { fetchOfferInfoAction, setOfferFavoriteStatusAction } from '../../store/api-actions';
+import { setOfferFavoriteStatusAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentOfferId } from '../../store/page-events/page-events';
 import { browserHistory } from '../../browser-history';
@@ -46,7 +46,7 @@ export default function AdCard({ offer, isMainScreen }: AdCardProps): JSX.Elemen
         </div>
       ) : null }
       <div className={ isMainScreen ? AdClasses.ImageWrapperMainAdClass : AdClasses.ImageWrapperPropertyAdClass }>
-        <Link to="/">
+        <Link to={`/offer/${offer.id}`}>
           <img className="place-card__image" src={ previewImage } width={260} height={200} alt="Place image" />
         </Link>
       </div>
@@ -70,10 +70,7 @@ export default function AdCard({ offer, isMainScreen }: AdCardProps): JSX.Elemen
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={ `/offer/${offer.id}` } onClick={ () => {
-            dispatch(fetchOfferInfoAction(id.toString()));
-          } }
-          >
+          <Link to={`/offer/${offer.id}`}>
             { title }
           </Link>
         </h2>
