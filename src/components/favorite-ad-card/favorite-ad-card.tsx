@@ -1,7 +1,7 @@
 import { Offer } from '../../types/offer';
-import { getRatingStarsStyle } from '../../utils';
+import { getRatingStarsStyle } from '../../utils/utils';
 import { useAppDispatch } from '../../hooks';
-import { setOfferFavoriteStatusAction, fetchOfferInfoAction } from '../../store/api-actions';
+import { setOfferFavoriteStatusAction } from '../../store/api-actions';
 import { setCurrentOfferId } from '../../store/page-events/page-events';
 import { Link } from 'react-router-dom';
 
@@ -28,7 +28,7 @@ export default function FavoriteAdCard({ offer }: FavoriteAdCardProps): JSX.Elem
         </div>
       ) : null }
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <Link to="/">
+        <Link to={ `/offer/${offer.id}` }>
           <img className="place-card__image" src={ previewImage } width="150" height="110" alt="Place"/>
         </Link>
       </div>
@@ -52,10 +52,7 @@ export default function FavoriteAdCard({ offer }: FavoriteAdCardProps): JSX.Elem
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={ `/offer/${ offer.id }` } onClick={ () => {
-            dispatch(fetchOfferInfoAction(id.toString()));
-          } }
-          >
+          <Link to={ `/offer/${ offer.id }` }>
             { title }
           </Link>
         </h2>

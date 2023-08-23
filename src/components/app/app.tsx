@@ -12,7 +12,6 @@ import { CSSProperties } from 'react';
 import { HistoryRouter } from '../hustory-route/history-route';
 import { browserHistory } from '../../browser-history';
 import { getOffersDataLoadingStatus } from '../../store/offers-data/selectors';
-import { getCurrentOfferDataLoadingStatus } from '../../store/current-offer-data/selectors';
 
 const override: CSSProperties = {
   display: 'block',
@@ -21,9 +20,8 @@ const override: CSSProperties = {
 
 export default function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector(getOffersDataLoadingStatus);
-  const isCurrenOfferDataLoading = useAppSelector(getCurrentOfferDataLoadingStatus);
 
-  if (isOffersDataLoading || isCurrenOfferDataLoading) {
+  if (isOffersDataLoading) {
     return (
       <ClipLoader
         color={ SPINNER_COLOR }

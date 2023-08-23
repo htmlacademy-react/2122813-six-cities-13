@@ -109,7 +109,7 @@ export const fetchOfferInfoAction = createAsyncThunk<{offerData: Offer; nearbyOf
   },
 );
 
-export const sendOfferCommentAction = createAsyncThunk<Review[], {
+export const sendOfferCommentAction = createAsyncThunk<Review, {
   id: string;
   commentData: CommentData;
   resetFormData: () => void;
@@ -121,7 +121,7 @@ export const sendOfferCommentAction = createAsyncThunk<Review[], {
   }>(
     'sendOfferComment',
     async({ id, resetFormData, commentData }, { extra: api }) => {
-      const { data } = await api.post<Review[]>(APIRoute.Comment + id, commentData);
+      const { data } = await api.post<Review>(APIRoute.Comment + id, commentData);
       resetFormData();
 
       return data;

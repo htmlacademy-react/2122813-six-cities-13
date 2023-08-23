@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useAppSelector } from '../../hooks';
 import { Offer } from '../../types/offer';
-import { sortOffers } from '../../utils';
+import { sortOffers } from '../../utils/utils';
 import AdCardList from '../ad-card-list/ad-card-list';
 import SortingTypeForm from '../sorting-type-form/sorting-type-form';
 import { getSortType } from '../../store/page-events/selectors';

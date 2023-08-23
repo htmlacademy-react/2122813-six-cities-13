@@ -1,6 +1,6 @@
-import { RATING_STARS_STYLE_KOEF } from './const';
-import { Offer } from './types/offer';
-import { SortingTypes } from './const';
+import { RATING_STARS_STYLE_KOEF } from '../const';
+import { Offer } from '../types/offer';
+import { SortingTypes } from '../const';
 import dayjs from 'dayjs';
 
 export function getRatingStarsStyle(rating: number): string {
