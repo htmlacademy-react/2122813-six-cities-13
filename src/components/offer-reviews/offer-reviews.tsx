@@ -5,15 +5,11 @@ import { getComments } from '../../store/current-offer-data/selectors';
 export default function OfferReviews(): JSX.Element {
   const reviews = useAppSelector(getComments);
 
-  const sortedReviews = reviews
-    .slice(-10)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-
   return (
     <>
-      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{ sortedReviews.length }</span></h2>
+      <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{ reviews.length }</span></h2>
       <ul className="reviews__list">
-        { sortedReviews.map(({ rating, id, user, comment, date }) => (
+        { reviews.slice(-10).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).map(({ rating, id, user, comment, date }) => (
           <li className="reviews__item" key={ id }>
             <div className="reviews__user user">
               <div className="reviews__avatar-wrapper user__avatar-wrapper">

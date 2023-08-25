@@ -109,7 +109,7 @@ export default function OfferScreen(): JSX.Element {
                   { `${bedrooms} Bedroom${ bedrooms === 1 ? '' : 's' }` }
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  { `Max ${ maxAdults } adults` }
+                  { `Max ${ maxAdults } adult${ maxAdults === 1 ? '' : 's' }` }
                 </li>
               </ul>
               <div className="offer__price">
@@ -144,10 +144,10 @@ export default function OfferScreen(): JSX.Element {
                   <span className="offer__user-status">{ host.isPro ? 'Pro' : '' }</span>
                 </div>
                 <div className="offer__description">
-                  { description.split('.').map((sentense) =>
+                  { description.slice(0, -1).split('.').map((sentense) =>
                     (
                       <p className="offer__text" key={ sentense }>
-                        { sentense }
+                        { sentense }.
                       </p>
                     )
                   )}

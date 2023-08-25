@@ -17,15 +17,16 @@ export default function OffersBoard({offers}: offersBoardProps) {
   const sortType = useAppSelector(getSortType);
   const sortedOffers = useMemo(() => sortOffers(offers, sortType), [offers, sortType]);
 
-  return(
+  const placesText = offers.length === 1 ? 'place' : 'places';
+
+  return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">{ offers.length } places to stay in { currentCity }</b>
+      <b className="places__found">{ offers.length } { placesText } to stay in { currentCity }</b>
       <SortingTypeForm />
 
       <div className="cities__places-list places__list tabs__content">
         <AdCardList offers={ sortedOffers } isMainScreen />
-
       </div>
     </section>
   );
