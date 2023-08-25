@@ -22,9 +22,9 @@ export default function MainScreen (): JSX.Element {
         <div className="cities">
           { !offers.length ? <MainEmpty /> :
             <div className="cities__places-container container">
-              <OffersBoard offers={offers} />
+              <OffersBoard offers={ offers } />
               <div className="cities__right-section">
-                <Map isMainScreen offers={offers} />
+                <Map isMainScreen offers={ offers } />
               </div>
             </div> }
         </div>
