@@ -141,7 +141,9 @@ export default function OfferScreen(): JSX.Element {
                     />
                   </div>
                   <span className="offer__user-name">{ host.name }</span>
-                  <span className="offer__user-status">{ host.isPro ? 'Pro' : '' }</span>
+                  {host.isPro ? (
+                    <span className="offer__user-status">Pro</span>
+                  ) : null}
                 </div>
                 <div className="offer__description">
                   { description.slice(0, -1).split('.').map((sentense) =>

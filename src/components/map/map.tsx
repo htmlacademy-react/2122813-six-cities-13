@@ -80,12 +80,12 @@ export default function Map(props: MapProps): JSX.Element {
 
   }, [map, offers, isMainScreen]);
 
-
   useEffect(() => {
     if (map) {
       map.flyTo([offers[0].city.location.latitude, offers[0].city.location.longitude], offers[0].city.location.zoom);
     }
   }, [map, offers]);
+
   return (
     <section
       className={isMainScreen ? MapClasses.SectionMainMapClass : MapClasses.SectionPropertyMapClass}
@@ -98,7 +98,6 @@ export default function Map(props: MapProps): JSX.Element {
         margin: '0 auto',
       } }
     >
-
     </section>
   );
 }

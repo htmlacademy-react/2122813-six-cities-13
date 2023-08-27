@@ -9,7 +9,7 @@ export default function FavoritesScreen(): JSX.Element {
   const favoriteOffers = useAppSelector(getFavoriteOffers);
 
   return (
-    <div className="page">
+    <div className={ favoriteOffers.length ? 'page' : 'page page--favorites-empty' }>
       <Header />
       { !favoriteOffers.length ? <FavoritesEmpty/> :
         <main className="page__main page__main--favorites">
