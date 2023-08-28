@@ -4,21 +4,19 @@ import { getRatingStarsStyle } from '../../utils/utils';
 import { AdClasses, AppRoute } from '../../const';
 import { setOfferFavoriteStatusAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setCurrentOfferId } from '../../store/page-events/page-events';
 import { browserHistory } from '../../browser-history';
 import { getAuthorizationStatus } from '../../store/authorization-user-process/selectors';
-import { useState } from 'react';
 
 type AdCardProps = {
   offer: Offer;
   isMainScreen: boolean;
+  setActiveOfferId?: (offerId: string | null) => void;
 }
 
-export default function AdCard({ offer, isMainScreen }: AdCardProps): JSX.Element {
+export default function AdCard({ offer, isMainScreen, setActiveOfferId }: AdCardProps): JSX.Element {
   const { isFavorite, isPremium, previewImage, price, title, type, rating, id } = offer;
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const [isFavoriteOffer, setFavoriteOffer] = useState<boolean>(isFavorite);
-  const favoriteStatus = `${+!isFavoriteOffer}`;
+  const favoriteStatus = `${Number(!isFavorite)}`;
   const dispatch = useAppDispatch();
   const handleFavoriteButtonClick = () => {
     if(authorizationStatus !== 'AUTH') {
@@ -26,19 +24,18 @@ export default function AdCard({ offer, isMainScreen }: AdCardProps): JSX.Elemen
 
       return;
     }
-    setFavoriteOffer((prevState) => !prevState);
     dispatch(setOfferFavoriteStatusAction({ id, favoriteStatus }));
   };
 
   return (
     <article
       className={isMainScreen ? AdClasses.ArticleMainAdClass : AdClasses.ArticlePropertyAdClass}
-      onMouseOver={ ()=> {
-        dispatch(setCurrentOfferId(id));
-      }}
-      onMouseOut={() => {
-        dispatch(setCurrentOfferId(null));
-      }}
+      onMouseOver={ setActiveOfferId ? (()=> {
+        setActiveOfferId(id);
+      }) : undefined}
+      onMouseOut={setActiveOfferId ? (() => {
+        setActiveOfferId(null);
+      }) : undefined}
     >
       { isPremium ? (
         <div className="place-card__mark">
@@ -56,7 +53,7 @@ export default function AdCard({ offer, isMainScreen }: AdCardProps): JSX.Elemen
             <b className="place-card__price-value">&euro;{ price }</b>
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
-          <button className={ `place-card__bookmark-button ${ isFavoriteOffer ? 'place-card__bookmark-button--active' : '' } button` } onClick={ handleFavoriteButtonClick } type="button">
+          <button className={ `place-card__bookmark-button ${ isFavorite ? 'place-card__bookmark-button--active' : '' } button` } onClick={ handleFavoriteButtonClick } type="button">
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
             </svg>

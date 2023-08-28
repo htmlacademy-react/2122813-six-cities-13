@@ -2,8 +2,8 @@ import Header from '../../components/header/header';
 import FavoriteAdCardList from '../../components/favorite-ad-card-list/favorite-ad-card-list';
 import { FavoritesEmpty } from '../../components/favorites-empty/favorites-empty';
 import { useAppSelector } from '../../hooks';
-import { getFavoriteOffers } from '../../store/favorites-offers-data/selectors';
 import { Link } from 'react-router-dom';
+import { getFavoriteOffers } from '../../store/offers-data/selectors';
 
 export default function FavoritesScreen(): JSX.Element {
   const favoriteOffers = useAppSelector(getFavoriteOffers);

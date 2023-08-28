@@ -4,8 +4,6 @@ import { Offer } from '../../types/offer';
 import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT, MapClasses } from '../../const';
 import useMap from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
-import { useAppSelector } from '../../hooks';
-import { getCurrentOfferId } from '../../store/page-events/selectors';
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
@@ -22,17 +20,17 @@ const currentCustomIcon = new Icon({
 type MapProps = {
   isMainScreen: boolean;
   offers: Offer[];
+  activeOfferId: string | null;
 }
 
 
 export default function Map(props: MapProps): JSX.Element {
-  const {isMainScreen, offers} = props;
-  const activeOfferId = useAppSelector(getCurrentOfferId);
+  const {isMainScreen, offers, activeOfferId} = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, offers[0]);
 
   useEffect(() => {
-    if (map && isMainScreen) {
+    if (map) {
       map.eachLayer((layer) => {
         if (layer.options.pane === 'markerPane') {
           map.removeLayer(layer);
@@ -55,30 +53,6 @@ export default function Map(props: MapProps): JSX.Element {
       });
     }
   }, [map, offers, activeOfferId, isMainScreen]);
-
-  useEffect(() => {
-    if (map && !isMainScreen) {
-      map.eachLayer((layer) => {
-        if (layer.options.pane === 'markerPane') {
-          map.removeLayer(layer);
-        }
-      });
-      offers.forEach((offer: Offer) => {
-        const marker = new Marker({
-          lat: offer.location.latitude,
-          lng: offer.location.longitude,
-        });
-        marker.setIcon(
-          activeOfferId !== undefined && offer.id === activeOfferId ||
-          (!isMainScreen && offer.id === activeOfferId)
-            ? currentCustomIcon
-            : defaultCustomIcon
-        )
-          .addTo(map);
-      });
-    }
-
-  }, [map, offers, isMainScreen]);
 
   useEffect(() => {
     if (map) {

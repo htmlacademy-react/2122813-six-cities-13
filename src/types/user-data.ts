@@ -5,4 +5,9 @@ export type UserData = {
   isPro: boolean;
   name: string;
   token: string;
-}
+};
+
+export type UserInfo = {
+  avatarUrl: string;
+  eMail: string;
+};

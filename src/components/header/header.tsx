@@ -3,15 +3,14 @@ import { Link } from 'react-router-dom';
 import { AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction, fetchFavoriteOffersAction } from '../../store/api-actions';
-import { getAuthorizationStatus } from '../../store/authorization-user-process/selectors';
-import { getFavoriteOffers } from '../../store/favorites-offers-data/selectors';
-import { getUserEmail } from '../../services/user-email';
+import { getAuthorizationStatus, getUserData } from '../../store/authorization-user-process/selectors';
+import { getFavoriteOffers } from '../../store/offers-data/selectors';
 
 function Header(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
-  const userEmail = getUserEmail();
   const favoriteOffers = useAppSelector(getFavoriteOffers);
+  const userData = useAppSelector(getUserData);
 
   return (
     <header className="header">
@@ -33,7 +32,7 @@ function Header(): JSX.Element {
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__user-name user__name">{ userEmail }</span>
+                    <span className="header__user-name user__name">{ userData ? userData.eMail : '' }</span>
                     <span className="header__favorite-count">{ favoriteOffers.length }</span>
                   </Link>
                 </li>
