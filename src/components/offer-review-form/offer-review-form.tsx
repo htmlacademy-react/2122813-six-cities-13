@@ -72,8 +72,8 @@ export default function OfferReviewForm({ id }: { id: string }): JSX.Element {
           </svg>
         </label>
 
-        <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio" disabled={ isCommentDataSending } onChange={ fieldChangeHandle } checked={ formData.rating === '1' }/>
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
+        <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-stars" type="radio" disabled={ isCommentDataSending } onChange={ fieldChangeHandle } checked={ formData.rating === '1' }/>
+        <label htmlFor="1-stars" className="reviews__rating-label form__rating-label" title="terribly">
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>

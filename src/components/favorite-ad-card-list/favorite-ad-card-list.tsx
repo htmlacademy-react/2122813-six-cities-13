@@ -1,8 +1,8 @@
 import FavoriteAdCard from '../favorite-ad-card/favorite-ad-card';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { getFavoriteOffers } from '../../store/favorites-offers-data/selectors';
 import { Link } from 'react-router-dom';
 import { filterOffers, setCity } from '../../store/offers-data/offers-data';
+import { getFavoriteOffers } from '../../store/offers-data/selectors';
 
 export default function FavoriteAdCardList(): JSX.Element {
   const favoriteOffers = useAppSelector(getFavoriteOffers);

@@ -5,14 +5,14 @@ import { getRatingStarsStyle } from '../../utils/utils';
 import AdCardList from '../../components/ad-card-list/ad-card-list';
 import Map from '../../components/map/map';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { getCurrentOfferDataLoadingStatus, getNearbyOffers, getOfferInfo } from '../../store/current-offer-data/selectors';
 import { getAuthorizationStatus } from '../../store/authorization-user-process/selectors';
 import { browserHistory } from '../../browser-history';
 import { AppRoute, SPINNER_COLOR } from '../../const';
 import { fetchOfferInfoAction, setOfferFavoriteStatusAction } from '../../store/api-actions';
-import { CSSProperties, useEffect, useState } from 'react';
+import { CSSProperties, useEffect } from 'react';
 import { ClipLoader } from 'react-spinners';
 import { Navigate, useParams } from 'react-router-dom';
+import { getCurrentOfferDataLoadingStatus, getNearbyOffers, getOfferInfo } from '../../store/offers-data/selectors';
 
 const override: CSSProperties = {
   display: 'block',
@@ -26,7 +26,6 @@ export default function OfferScreen(): JSX.Element {
   const offer = useAppSelector(getOfferInfo);
   const nearbyOffers = useAppSelector(getNearbyOffers);
   const dispatch = useAppDispatch();
-  const [isFavoriteOffer, setFavoriteOffer] = useState<boolean | null>(offer?.isFavorite ? offer.isFavorite : null);
 
   useEffect(() => {
     if (id) {
@@ -50,15 +49,14 @@ export default function OfferScreen(): JSX.Element {
     return <Navigate to={AppRoute.NotFound} replace />;
   }
 
-  const { isPremium, description, goods, host, images, rating, maxAdults, price, title, type, bedrooms } = offer;
-  const favoriteStatus = `${+!isFavoriteOffer}`;
+  const { isPremium, description, goods, host, images, rating, maxAdults, price, title, type, bedrooms, isFavorite } = offer;
+  const favoriteStatus = `${Number(!isFavorite)}`;
   const handleFavoriteButtonClick = () => {
     if(authorizationStatus !== 'AUTH') {
       browserHistory.push(AppRoute.Login);
 
       return;
     }
-    setFavoriteOffer((prevState) => !prevState);
     dispatch(setOfferFavoriteStatusAction({ id, favoriteStatus }));
   };
 
@@ -89,7 +87,7 @@ export default function OfferScreen(): JSX.Element {
                 <h1 className="offer__name">
                   { title }
                 </h1>
-                <button className= { `offer__bookmark-button button ${ isFavoriteOffer ? 'offer__bookmark-button--active' : '' }`} onClick={ handleFavoriteButtonClick } type="button">
+                <button className= { `offer__bookmark-button button ${ isFavorite ? 'offer__bookmark-button--active' : '' }`} onClick={ handleFavoriteButtonClick } type="button">
                   <svg className="offer__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
@@ -141,7 +139,9 @@ export default function OfferScreen(): JSX.Element {
                     />
                   </div>
                   <span className="offer__user-name">{ host.name }</span>
-                  <span className="offer__user-status">{ host.isPro ? 'Pro' : '' }</span>
+                  {host.isPro ? (
+                    <span className="offer__user-status">Pro</span>
+                  ) : null}
                 </div>
                 <div className="offer__description">
                   { description.slice(0, -1).split('.').map((sentense) =>
@@ -162,7 +162,7 @@ export default function OfferScreen(): JSX.Element {
               </section>
             </div>
           </div>
-          <Map isMainScreen={ false } offers={ [...nearbyOffers.slice(0, 3), offer] } />
+          <Map isMainScreen={ false } offers={ [...nearbyOffers.slice(0, 3), offer] } activeOfferId={offer.id} />
         </section>
         <div className="container">
           <section className="near-places places">
@@ -170,7 +170,7 @@ export default function OfferScreen(): JSX.Element {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              <AdCardList isMainScreen={ false } offers={ nearbyOffers.slice(0, 3) } />
+              <AdCardList offers={ nearbyOffers.slice(0, 3) } />
             </div>
           </section>
         </div>

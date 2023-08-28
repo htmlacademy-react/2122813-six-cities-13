@@ -9,10 +9,11 @@ import { getCityName } from '../../store/offers-data/selectors';
 
 type offersBoardProps = {
     offers: Offer[];
+    setActiveOfferId: (offerId: string | null) => void;
 }
 
 
-export default function OffersBoard({offers}: offersBoardProps) {
+export default function OffersBoard({offers, setActiveOfferId}: offersBoardProps) {
   const currentCity = useAppSelector(getCityName);
   const sortType = useAppSelector(getSortType);
   const sortedOffers = useMemo(() => sortOffers(offers, sortType), [offers, sortType]);
@@ -26,7 +27,7 @@ export default function OffersBoard({offers}: offersBoardProps) {
       <SortingTypeForm />
 
       <div className="cities__places-list places__list tabs__content">
-        <AdCardList offers={ sortedOffers } isMainScreen />
+        <AdCardList offers={ sortedOffers } isMainScreen setActiveOfferId={setActiveOfferId} />
       </div>
     </section>
   );

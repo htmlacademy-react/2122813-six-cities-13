@@ -7,9 +7,8 @@ import { CommentData } from '../types/comment-data';
 import { Offer } from '../types/offer';
 import { Review } from '../types/review';
 import { AppDispatch, State } from '../types/state';
-import { UserData } from '../types/user-data';
+import { UserData, UserInfo } from '../types/user-data';
 import { redirectToRoute } from './action';
-import { saveUserEmail } from '../services/user-email';
 
 export const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
   dispatch: AppDispatch;
@@ -47,26 +46,28 @@ export const setOfferFavoriteStatusAction = createAsyncThunk<Offer, {
     extra: AxiosInstance;
   }>(
     'setOfferFavoriteStatus',
-    async({ id, favoriteStatus }, { dispatch, extra: api }) => {
+    async({ id, favoriteStatus }, { extra: api }) => {
       const { data } = await api.post<Offer>(APIRoute.FavoriteOffers + id.toString() + APIRoute.JustSlash + favoriteStatus);
-      dispatch(fetchFavoriteOffersAction());
 
       return data;
     }
   );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<UserInfo, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'checkAuth',
   async (_arg, { extra: api }) => {
-    await api.get(APIRoute.Login);
+    const {data} = await api.get<UserData>(APIRoute.Login);
+    const {email: eMail, avatarUrl} = data;
+
+    return {eMail, avatarUrl};
   },
 );
 
-export const loginAction = createAsyncThunk<string, AuthData, {
+export const loginAction = createAsyncThunk<UserInfo, AuthData, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -76,9 +77,9 @@ export const loginAction = createAsyncThunk<string, AuthData, {
     const { data } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(data.token);
     dispatch(redirectToRoute(AppRoute.Root));
-    saveUserEmail(data.email);
+    const {email: eMail, avatarUrl} = data;
 
-    return data.email;
+    return {eMail, avatarUrl};
   },
 );
 
